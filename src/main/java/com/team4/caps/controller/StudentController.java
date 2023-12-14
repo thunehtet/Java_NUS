@@ -31,7 +31,7 @@ public class StudentController {
     public String getAllStudents(Model model)
     {
         var students=studentService.getAllStudents();
-        students.forEach(student -> student.setPassword("000"));
+        //students.forEach(student -> student.setPassword("000"));
         model.addAttribute("students",students);
         return "students";
     }

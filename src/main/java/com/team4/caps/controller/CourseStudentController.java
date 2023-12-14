@@ -106,10 +106,13 @@ public class CourseStudentController {
         System.out.println(body);
         Double grade=Double.valueOf(body.substring(6));
         var courseStudent=courseStudentService.getCourseStudentById(id);
+        System.out.println("!!!!!!!!!!!!!!!!");
+        System.out.println(grade);
         courseStudent.setGrade(grade);
-        courseStudent.setRequestStatus(3);
-
-        var courseStudents=courseStudentService.getAllCourseStudents().stream().filter(courseStudent1 -> courseStudent1.getStudent().getId()==id).toList();
+        courseStudent.setRequestStatus(2);
+        courseStudentService.updateCourseStudentById(id,courseStudent);
+        System.out.println("!!!!!!!!!!!!!!!!");
+        var courseStudents=courseStudentService.getAllCourseStudents().stream().filter(courseStudent1 -> courseStudent1.getStudent().getId()==courseStudent.getStudent().getId()).toList();
         double totol=0.0;
         double credit=0.0;
         for(var c:courseStudents)
@@ -118,9 +121,17 @@ public class CourseStudentController {
             totol+=c.getGrade()*c.getCourseLecturer().getCourse().getCourseCredits();
             credit+=c.getCourseLecturer().getCourse().getCourseCredits();
         }
-        studentService.getStudentById(id).setGpa((float) (totol/credit));
+
+        System.out.println(totol);
+        System.out.println(credit);
+        if(credit>0.1) {
+            studentService.getStudentById(id).setGpa((float) (totol / credit));
+        }
         //model.addAttribute("updatedStudent",courseStudent);
-        return "redirect:/grade-course-students/"+courseStudent.getCourseLecturer().getId();
+
+        var did=courseStudent.getCourseLecturer().getId();
+        System.out.println("!!!!!!!!!!!!!!!!");System.out.println("!!!!!!!!!!!!!!!!");
+        return "redirect:/grade-course-students/"+did;
     }
 
     @GetMapping("/studentEnrolling/{studentId}/{courseLecturerId}")

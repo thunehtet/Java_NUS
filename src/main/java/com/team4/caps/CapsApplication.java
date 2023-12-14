@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 public class CapsApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CapsApplication.class, args);
+		SpringApplication.run(CapsApplication.class, args); 
 	}
 
 }
